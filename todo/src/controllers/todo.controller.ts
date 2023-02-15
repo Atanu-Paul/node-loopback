@@ -26,7 +26,14 @@ export class TodoController {
   @post('/todos')
   @response(200, {
     description: 'Todo model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Todo)}},
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Todo, {includeRelations: true}),
+        }
+      }
+    },
   })
   async create(
     @requestBody({
